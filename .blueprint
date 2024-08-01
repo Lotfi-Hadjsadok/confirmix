@@ -1,0 +1,19 @@
+created:
+    - database/factories/ClientFactory.php
+    - database/factories/EmployerFactory.php
+    - database/factories/EmployeeFactory.php
+    - database/factories/OrderFactory.php
+    - database/migrations/2024_07_30_202041_create_clients_table.php
+    - database/migrations/2024_07_30_202042_create_employers_table.php
+    - database/migrations/2024_07_30_202043_create_employees_table.php
+    - database/migrations/2024_07_30_202044_create_orders_table.php
+    - database/migrations/2024_07_30_202045_create_employee_employer_table.php
+    - app/Models/Client.php
+    - app/Models/Employer.php
+    - app/Models/Employee.php
+    - app/Models/Order.php
+models:
+    Client: { name: string, state: string, city: string, relationships: { hasMany: Order } }
+    Employer: { name: string, relationships: { hasMany: 'Order, Employee' } }
+    Employee: { name: string, relationships: { hasMany: Order, belongsToMany: Employer } }
+    Order: { product: string, quantity: integer, shipping_method: string, shipping_price: integer, total: integer, currency: string, status: string, relationships: { belongsTo: 'Client, Employee, Employer' } }

@@ -1,0 +1,31 @@
+models:
+  Client:
+    name: string
+    state: string
+    city: string
+    relationships:
+      hasMany: Order
+
+  Employer:
+    name: string
+    relationships:
+      hasMany: Order, Employee
+
+  Employee:
+    name: string
+    relationships:
+      hasMany: Order
+      belongsToMany: Employer
+
+
+  Order:
+    product: string
+    quantity: integer
+    shipping_method: string
+    shipping_price: integer
+    total: integer
+    currency: string
+    status: string
+
+    relationships:
+      belongsTo: Client, Employee, Employer
