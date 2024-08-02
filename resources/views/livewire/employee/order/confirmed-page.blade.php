@@ -4,10 +4,10 @@
             <x-order.filter class="pb-4"></x-order.filter>
             <div class="grid grid-cols-2 gap-4">
                 <x-order.table.stat-card stonks="up" headline="Confirmed Orders"
-                    :data="Order::where('status', 'confirmed')->count()"></x-order.table.stat-card>
+                    :data="$this->completed_orders_count"></x-order.table.stat-card>
 
                 <x-order.table.stat-card stonks="down" headline="Faild Orders"
-                    :data="Order::whereIn('status', ['cancelled', 'not_delivered'])->count()"></x-order.table.stat-card>
+                    :data="$this->failed_orders_count"></x-order.table.stat-card>
             </div>
         </div>
 

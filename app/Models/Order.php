@@ -40,6 +40,16 @@ class Order extends Model
         'employer_id' => 'integer',
     ];
 
+
+    public static function date_filter($query,$filter_by){
+        return match($filter_by) {
+            'today' => $query->whereDate('created_at', now()->toDateString()),
+            'seven_last_days' => $query->whereBetween('created_at', [now()->subDays(7)->startOfDay(), now()->endOfDay()]),
+            'thirty_last_days' => $query->whereBetween('created_at', [now()->subDays(30)->startOfDay(), now()->endOfDay()]),
+            default => $query
+        };
+    }
+
     public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);

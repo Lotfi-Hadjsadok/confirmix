@@ -17,23 +17,30 @@ class ConfirmedPage extends Component
 
     #[Computed]
     public function orders() {
-
         $query = Order::with('client')
             ->where('status', 'confirmed')
             ->orderBy('updated_at', 'desc');
 
-        match($this->filter_by) {
-            'today' => $query->whereDate('created_at', now()->toDateString()),
-            'seven_last_days' => $query->whereBetween('created_at', [now()->subDays(7)->startOfDay(), now()->endOfDay()]),
-            'thirty_last_days' => $query->whereBetween('created_at', [now()->subDays(30)->startOfDay(), now()->endOfDay()]),
-            default => $query
-        };
-        echo($this->filter_by);
-        return $query->simplePaginate(10);
+        return  Order::date_filter($query,$this->filter_by)->simplePaginate(10);
     }
 
+    #[Computed]
+    public function completed_orders_count(){
+        $query = Order::with('client')
+        ->where('status', 'confirmed')
+        ->orderBy('updated_at', 'desc');
 
+        return  Order::date_filter($query,$this->filter_by)->count();
+    }
 
+    #[Computed]
+    public function failed_orders_count(){
+        $query = Order::with('client')
+        ->whereIn('status', ['not_delivered','cancelled'])
+        ->orderBy('updated_at', 'desc');
+
+        return  Order::date_filter($query,$this->filter_by)->count();
+    }
     public function render()
     {
         return view('livewire.employee.order.confirmed-page');
