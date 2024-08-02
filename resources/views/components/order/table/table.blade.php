@@ -21,6 +21,8 @@
     </tbody>
 </table>
 
-<div class="p-4 border-t border-neutral-700">
-    <td>{{ $orders->links(data: ['scrollTo' => false]) }}</td>
-</div>
+@if ($orders->hasPages())
+    <div class="p-4 border-t border-neutral-700">
+        <td>{{ $orders->links(data: ['scrollTo' => false]) }}</td>
+    </div>
+@endif

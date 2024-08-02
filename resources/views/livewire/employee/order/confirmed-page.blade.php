@@ -1,7 +1,7 @@
 <div>
     <div class="px-4 py-10 max-w-[1200px] mx-auto">
-
         <div class="max-w-[85rem] pb-10 mx-auto">
+            <x-order.filter class="pb-4"></x-order.filter>
             <div class="grid grid-cols-2 gap-4">
                 <x-order.table.stat-card stonks="up" headline="Confirmed Orders"
                     :data="Order::where('status', 'confirmed')->count()"></x-order.table.stat-card>
