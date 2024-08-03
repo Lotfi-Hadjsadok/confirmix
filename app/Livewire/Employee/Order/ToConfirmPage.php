@@ -11,36 +11,48 @@ use Livewire\WithoutUrlPagination;
 
 class ToConfirmPage extends Component
 {
-    use WithPagination,WithoutUrlPagination;
+    use WithPagination, WithoutUrlPagination;
 
     public $parent_id = 'to-confirm-page';
-    public $user;
 
-    public function mount(){
-        $this->user = User::find(1);
+    #[Computed(persist: true)]
+    public function user()
+    {
+        return User::with('employee')->find(1);
     }
 
     #[Computed]
-    public function orders() {
+    public function orders()
+    {
         return $this->user->employee->orders()
-        ->with('client')
-        ->statuses(['to_recall','pending'] )
-        ->orderBy('updated_at', 'desc')
-        ->simplePaginate(10);
+            ->with('client')
+            ->statuses(['to_recall', 'pending'])
+            ->orderBy('updated_at', 'desc')
+            ->simplePaginate(10);
     }
 
-    #[Computed]
-    public function orders_count(array $statuses):int{
+    public function orders_count(array $statuses): int
+    {
         return $this->user->employee->orders()
-        ->with('client')
-        ->statuses($statuses)
-        ->orderBy('updated_at', 'desc')
-        ->count();
+            ->statuses($statuses)
+            ->count();
     }
 
 
-    public function updateStatus(Order $order,$status){
-        $order->status=$status;
+    public function updateStatus(Order $order, $status)
+    {
+        $order->status = $status;
         $order->save();
+    }
+
+
+    public function render()
+    {
+        return view(
+            'livewire.employee.order.to-confirm-page',
+            [
+                'pending_orders_count' => $this->orders_count(['pending']), 'to_recall_orders_count' => $this->orders_count(['to_recall'])
+            ]
+        );
     }
 }

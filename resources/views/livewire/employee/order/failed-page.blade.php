@@ -6,10 +6,10 @@
 
             <div class="grid grid-cols-2 gap-4">
                 <x-order.table.stat-card stonks="down" headline="Cancelled Orders"
-                    :data="$this->orders_count(['cancelled'])"></x-order.table.stat-card>
+                    :data="$cancelled_orders_count"></x-order.table.stat-card>
 
                 <x-order.table.stat-card stonks="down" headline="Not delivered orders"
-                    :data="$this->orders_count(['not_delivered'])"></x-order.table.stat-card>
+                    :data="$not_delivered_orders_count"></x-order.table.stat-card>
             </div>
         </div>
 

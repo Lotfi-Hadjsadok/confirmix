@@ -4,10 +4,10 @@
             <x-order.filter :$parent_id class="pb-4"></x-order.filter>
             <div class="grid grid-cols-2 gap-4">
                 <x-order.table.stat-card stonks="up" headline="Confirmed Orders"
-                    :data="$this->orders_count(['confirmed'])"></x-order.table.stat-card>
+                    :data="$confirmed_orders_count"></x-order.table.stat-card>
 
                 <x-order.table.stat-card stonks="down" headline="Faild Orders"
-                    :data="$this->orders_count(['cancelled', 'not_delivered'])"></x-order.table.stat-card>
+                    :data="$failed_orders_count"></x-order.table.stat-card>
             </div>
         </div>
 

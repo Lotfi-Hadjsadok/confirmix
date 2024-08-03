@@ -12,46 +12,50 @@ use Livewire\WithoutUrlPagination;
 class ConfirmedPage extends Component
 {
 
-    use WithPagination,WithoutUrlPagination;
+    use WithPagination, WithoutUrlPagination;
     public $parent_id = 'confirmed-page';
     public $filter_by = 'today';
-    public $user;
 
 
-    public function mount(){
-        $this->user = User::find(1);
-    }
-
-    #[Computed]
-    public function orders() {
-        return $this->user->employee->orders()
-        ->with('client')
-        ->statuses(['confirmed'] )
-        ->orderBy('updated_at', 'desc')
-        ->dateFilter($this->filter_by)
-        ->simplePaginate(10);
+    #[Computed(persist: true)]
+    public function user()
+    {
+        return User::with('employee')->find(1);
     }
 
 
     #[Computed]
-    public function orders_count(array $statuses):int{
+    public function orders()
+    {
         return $this->user->employee->orders()
-        ->with('client')
-        ->statuses($statuses)
-        ->orderBy('updated_at', 'desc')
-        ->dateFilter($this->filter_by)
-        ->count();
+            ->with('client')
+            ->statuses(['confirmed'])
+            ->orderBy('updated_at', 'desc')
+            ->dateFilter($this->filter_by)
+            ->simplePaginate(10);
+    }
+
+
+    #[Computed]
+    public function orders_count(array $statuses): int
+    {
+        return $this->user->employee->orders()
+            ->statuses($statuses)
+            ->dateFilter($this->filter_by)
+            ->count();
     }
 
     public function render()
     {
-        return view('livewire.employee.order.confirmed-page');
+        return view('livewire.employee.order.confirmed-page', [
+            'confirmed_orders_count' => $this->orders_count(['confirmed']),
+            'failed_orders_count' => $this->orders_count(['cancelled', 'not_delivered'])
+        ]);
     }
 
-    public function updateStatus(Order $order,string $status):void{
-        $order->status=$status;
+    public function updateStatus(Order $order, string $status): void
+    {
+        $order->status = $status;
         $order->save();
     }
-
-
 }

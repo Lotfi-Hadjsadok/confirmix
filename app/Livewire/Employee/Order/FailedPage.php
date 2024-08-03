@@ -11,37 +11,48 @@ use Livewire\WithoutUrlPagination;
 
 class FailedPage extends Component
 {
-    use WithPagination,WithoutUrlPagination;
+    use WithPagination, WithoutUrlPagination;
     public $parent_id = 'failed-page';
     public $filter_by = 'today';
-    public $user;
 
 
-    public function mount(){
-        $this->user = User::find(1);
+    #[Computed(persist: true)]
+    public function user()
+    {
+        return User::with('employee')->find(1);
     }
 
+    public function render()
+    {
+        return view('livewire.employee.order.failed-page', [
+            'cancelled_orders_count' => $this->orders_count(['cancelled']),
+            'not_delivered_orders_count' => $this->orders_count(['not_delivered']),
+        ]);
+    }
 
     #[Computed]
-    public function orders() {
+    public function orders()
+    {
         return $this->user->employee->orders()
-        ->with('client')
-        ->statuses(['cancelled','not_delivered'] )
-        ->orderBy('updated_at', 'desc')
-        ->simplePaginate(10);
+            ->with('client')
+            ->statuses(['cancelled', 'not_delivered'])
+            ->orderBy('updated_at', 'desc')
+            ->simplePaginate(10);
     }
 
     #[Computed]
-    public function orders_count(array $statuses):int{
+    public function orders_count(array $statuses): int
+    {
         return $this->user->employee->orders()
-        ->with('client')
-        ->statuses($statuses)
-        ->orderBy('updated_at', 'desc')
-        ->count();
+            ->with('client')
+            ->statuses($statuses)
+            ->orderBy('updated_at', 'desc')
+            ->count();
     }
 
-    public function updateStatus(Order $order,$status){
-        $order->status=$status;
+    public function updateStatus(Order $order, $status)
+    {
+        $order->status = $status;
         $order->save();
     }
 }

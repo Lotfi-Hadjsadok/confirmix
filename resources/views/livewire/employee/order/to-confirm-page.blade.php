@@ -4,10 +4,10 @@
         <div class="max-w-[85rem] pb-10 mx-auto">
             <div class="grid grid-cols-2 gap-4">
                 <x-order.table.stat-card stonks="up" headline="Pending Orders"
-                    :data="$this->orders_count(['pending'])"></x-order.table.stat-card>
+                    :data="$pending_orders_count"></x-order.table.stat-card>
 
                 <x-order.table.stat-card stonks="up" headline="Orders To Recall"
-                    :data="$this->orders_count(['to_recall'])"></x-order.table.stat-card>
+                    :data="$to_recall_orders_count"></x-order.table.stat-card>
             </div>
         </div>
 
