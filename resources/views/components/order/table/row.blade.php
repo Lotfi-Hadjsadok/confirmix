@@ -1,4 +1,5 @@
-<tr wire:key="$parent.parent_id-{{ $order->id }}">
+@props(['parent_id', 'order'])
+<tr wire:key='{{ $parent_id }}-{{ $order->id }}'>
     <td class="pl-3 text-sm text-gray-800 size-px whitespace-nowrap dark:text-neutral-200">
         <div class="py-3 ps-6 lg:ps-3 xl:ps-0 pe-6">
             <div class="flex items-center gap-x-3">
@@ -53,7 +54,7 @@
     <td class="text-sm text-gray-800 size-px whitespace-nowrap dark:text-neutral-200">
         <div class="py-3 ps-6 lg:ps-3 xl:ps-0 pe-6">
             <div class="flex items-center gap-x-3">
-                <x-order.table.status :$order></x-order.table.status>
+                <x-order.table.status :$parent_id :$order></x-order.table.status>
             </div>
         </div>
     </td>

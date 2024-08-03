@@ -7,4 +7,5 @@ use Livewire\Component;
 class UpdateStatus extends Component
 {
     public $order;
+    public $parent_id;
 }

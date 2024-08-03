@@ -3,6 +3,7 @@
 namespace App\Livewire\Employee\Order;
 
 use App\Models\Order;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\Computed;
@@ -14,46 +15,43 @@ class ConfirmedPage extends Component
     use WithPagination,WithoutUrlPagination;
     public $parent_id = 'confirmed-page';
     public $filter_by = 'today';
+    public $user;
+
+
+    public function mount(){
+        $this->user = User::find(1);
+    }
 
     #[Computed]
     public function orders() {
-        $query = Order::with('client')
-            ->where('status', 'confirmed')
-            ->orderBy('updated_at', 'desc');
-
-        return  Order::date_filter($query,$this->filter_by)->simplePaginate(10);
+        return $this->user->employee->orders()
+        ->with('client')
+        ->statuses(['confirmed'] )
+        ->orderBy('updated_at', 'desc')
+        ->dateFilter($this->filter_by)
+        ->simplePaginate(10);
     }
+
 
     #[Computed]
-    public function completed_orders_count(){
-        $query = Order::with('client')
-        ->where('status', 'confirmed')
-        ->orderBy('updated_at', 'desc');
-
-        return  Order::date_filter($query,$this->filter_by)->count();
+    public function orders_count(array $statuses):int{
+        return $this->user->employee->orders()
+        ->with('client')
+        ->statuses($statuses)
+        ->orderBy('updated_at', 'desc')
+        ->dateFilter($this->filter_by)
+        ->count();
     }
 
-    #[Computed]
-    public function failed_orders_count(){
-        $query = Order::with('client')
-        ->whereIn('status', ['not_delivered','cancelled'])
-        ->orderBy('updated_at', 'desc');
-
-        return  Order::date_filter($query,$this->filter_by)->count();
-    }
     public function render()
     {
         return view('livewire.employee.order.confirmed-page');
     }
 
-    public function updateStatus(Order $order,$status){
+    public function updateStatus(Order $order,string $status):void{
         $order->status=$status;
         $order->save();
     }
 
-    public function updateFilterBy($filter)
-    {
-        $this->filter_by = $filter;
-    }
 
 }

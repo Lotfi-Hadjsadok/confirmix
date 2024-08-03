@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('currency');
             $table->string('status');
             $table->foreignId('client_id');
-            $table->foreignId('employee_id');
-            $table->foreignId('employer_id');
+            $table->foreignId('employee_id')->constrained();
+            $table->foreignId('employer_id')->constrained();
             $table->timestamps();
         });
     }

@@ -14,9 +14,9 @@
     </button>
     <ul x-data class="flex flex-col gap-5 mt-32 *:cursor-pointer ">
 
-        <a href="{{ route('to-confirm') }}" wire:navigate>
+        <a href="{{ route('employee-to-confirm') }}" wire:navigate>
             <li :class="open && 'px-4'"
-                class="flex hover:bg-primary/30 items-center justify-center gap-2 p-2 text-center text-white rounded-full shadow {{ request()->route()->named('to-confirm') || request()->is('/') ? 'bg-primary/30' : 'bg-primary' }} ">
+                class="flex hover:bg-primary/30 items-center justify-center gap-2 p-2 text-center text-white rounded-full shadow {{ request()->route()->named('employee-to-confirm') || request()->is('/') ? 'bg-primary/30' : 'bg-primary' }} ">
                 <svg class="shrink-0 size-6" viewBox="0 0 1024 1024" class="icon" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" fill="#000000">
                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -34,9 +34,9 @@
             </li>
         </a>
 
-        <a href="{{ route('confirmed') }}" wire:navigate>
+        <a href="{{ route('employee-confirmed') }}" wire:navigate>
             <li :class="open && 'px-4'"
-                class="flex hover:bg-primary/30 items-center justify-center gap-2 p-2 text-white rounded-full shadow {{ request()->route()->named('confirmed') ? 'bg-primary/30' : 'bg-primary' }}">
+                class="flex hover:bg-primary/30 items-center justify-center gap-2 p-2 text-white rounded-full shadow {{ request()->route()->named('employee-confirmed') ? 'bg-primary/30' : 'bg-primary' }}">
                 <svg class="size-6" viewBox="0 0 1024 1024" fill="#ffffff" class="icon" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -54,9 +54,9 @@
             </li>
         </a>
 
-        <a href="{{ route('failed') }}" wire:navigate>
+        <a href="{{ route('employee-failed') }}" wire:navigate>
             <li :class="open && 'px-4'"
-                class="flex items-center  hover:bg-primary/30 justify-center gap-2 p-2 text-white rounded-full shadow {{ request()->route()->named('failed') ? 'bg-primary/30' : 'bg-primary' }}">
+                class="flex items-center  hover:bg-primary/30 justify-center gap-2 p-2 text-white rounded-full shadow {{ request()->route()->named('employee-failed') ? 'bg-primary/30' : 'bg-primary' }}">
                 <svg class="size-6" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -67,6 +67,51 @@
                     </g>
                 </svg>
                 <span :class="open ? 'block' : 'hidden'" class="text-nowrap">Failed Orders</span>
+            </li>
+        </a>
+        <a href="{{ route('employee-settings') }}" wire:navigate>
+            <li :class="open && 'px-4'"
+                class="flex items-center  hover:bg-primary/30 justify-center gap-2 p-2 text-white rounded-full shadow {{ request()->route()->named('employee-settings') ? 'bg-primary/30' : 'bg-primary' }}">
+                <svg class="size-6" viewBox="0 0 600 600" version="1.1" id="svg9724" sodipodi:docname="settings2.svg"
+                    inkscape:version="1.2.2 (1:1.2.2+202212051550+b0a8486541)"
+                    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+                    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+                    xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" fill="#ffffff"
+                    stroke="#ffffff">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                        <defs id="defs9728"></defs>
+                        <sodipodi:namedview id="namedview9726" pagecolor="#ffffff" bordercolor="#ffffff"
+                            borderopacity="1.0" inkscape:showpageshadow="2" inkscape:pageopacity="0.0"
+                            inkscape:pagecheckerboard="0" inkscape:deskcolor="#ffffff" showgrid="true"
+                            inkscape:zoom="0.59480855" inkscape:cx="44.55215" inkscape:cy="332.03961"
+                            inkscape:window-width="1920" inkscape:window-height="1009" inkscape:window-x="0"
+                            inkscape:window-y="1080" inkscape:window-maximized="1" inkscape:current-layer="svg9724"
+                            showguides="true">
+                            <inkscape:grid type="xygrid" id="grid9972" originx="0" originy="0">
+                            </inkscape:grid>
+                            <sodipodi:guide position="40,400" orientation="0,-1" id="guide292"
+                                inkscape:locked="false"></sodipodi:guide>
+                            <sodipodi:guide position="90,200" orientation="0,-1" id="guide294"
+                                inkscape:locked="false"></sodipodi:guide>
+                            <sodipodi:guide position="230,500" orientation="0,-1" id="guide296"
+                                inkscape:locked="false"></sodipodi:guide>
+                            <sodipodi:guide position="210,300" orientation="0,-1" id="guide298"
+                                inkscape:locked="false"></sodipodi:guide>
+                            <sodipodi:guide position="230,100" orientation="0,-1" id="guide300"
+                                inkscape:locked="false"></sodipodi:guide>
+                        </sodipodi:namedview>
+                        <g id="g10449" transform="matrix(0.95173205,0,0,0.95115787,13.901174,12.168794)"
+                            style="stroke-width:1.05103">
+                            <path id="path356"
+                                style="color:#ffffff;fill:#ffffff;stroke-linecap:round;-inkscape-stroke:none"
+                                d="M 447.70881 -12.781343 A 42.041451 42.041451 0 0 0 405.66786 29.260344 L 405.66786 50.301721 L 27.434765 50.301721 A 42.041302 42.041302 0 0 0 -14.606185 92.341354 A 42.041302 42.041302 0 0 0 27.434765 134.38304 L 405.66786 134.38304 L 405.66786 155.44906 A 42.041451 42.041451 0 0 0 447.70881 197.49075 A 42.041451 42.041451 0 0 0 489.74976 155.44906 L 489.74976 134.38304 L 573.78036 134.38304 A 42.041302 42.041302 0 0 0 615.82336 92.341354 A 42.041302 42.041302 0 0 0 573.78036 50.301721 L 489.74976 50.301721 L 489.74976 29.260344 A 42.041451 42.041451 0 0 0 447.70881 -12.781343 z M 143.0012 197.48869 A 42.041451 42.041451 0 0 0 100.9582 239.53038 L 100.9582 260.5697 L 27.447078 260.5697 A 42.041302 42.041302 0 0 0 -14.593872 302.61139 A 42.041302 42.041302 0 0 0 27.447078 344.65308 L 100.9582 344.65308 L 100.9582 365.7191 A 42.041451 42.041451 0 0 0 143.0012 407.76078 A 42.041451 42.041451 0 0 0 185.04215 365.7191 L 185.04215 344.65308 L 573.79472 344.65308 A 42.041302 42.041302 0 0 0 615.83567 302.61139 A 42.041302 42.041302 0 0 0 573.79472 260.5697 L 185.04215 260.5697 L 185.04215 239.53038 A 42.041451 42.041451 0 0 0 143.0012 197.48869 z M 279.59427 407.76078 A 42.041451 42.041451 0 0 0 237.55332 449.80042 L 237.55332 470.83974 L 27.447078 470.83974 A 42.041302 42.041302 0 0 0 -14.593872 512.88143 A 42.041302 42.041302 0 0 0 27.447078 554.92106 L 237.55332 554.92106 L 237.55332 575.98913 A 42.041451 42.041451 0 0 0 279.59427 618.02877 A 42.041451 42.041451 0 0 0 321.63522 575.98913 L 321.63522 554.92106 L 573.79472 554.92106 A 42.041302 42.041302 0 0 0 615.83567 512.88143 A 42.041302 42.041302 0 0 0 573.79472 470.83974 L 321.63522 470.83974 L 321.63522 449.80042 A 42.041451 42.041451 0 0 0 279.59427 407.76078 z ">
+                            </path>
+                        </g>
+                    </g>
+                </svg>
+                <span :class="open ? 'block' : 'hidden'" class="text-nowrap">Settings</span>
             </li>
         </a>
 

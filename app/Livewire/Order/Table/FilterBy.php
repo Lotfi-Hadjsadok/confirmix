@@ -9,6 +9,7 @@ class FilterBy extends Component
 {
     #[Modelable]
     public $filter_by;
+    public $parent_id;
 
 
     public function render()

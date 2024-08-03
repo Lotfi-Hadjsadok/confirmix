@@ -2,9 +2,11 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
+use App\Models\User;
+use App\Enums\UserRole;
 use App\Models\Employee;
+use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class EmployeeFactory extends Factory
 {
@@ -22,6 +24,9 @@ class EmployeeFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'user_id' => User::factory()->create(
+                ['role' => UserRole::EMPLOYEE->value]
+            )
         ];
     }
 }

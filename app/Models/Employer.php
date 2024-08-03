@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Employer extends Model
 {
@@ -27,6 +28,11 @@ class Employer extends Model
     protected $casts = [
         'id' => 'integer',
     ];
+
+
+    public function user(): BelongsTo{
+        return $this->belongsTo(User::class);
+    }
 
     public function orders(): HasMany
     {

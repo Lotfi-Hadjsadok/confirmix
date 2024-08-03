@@ -1,4 +1,8 @@
-@props(['orders', 'columns' => ['name', 'state', 'city', 'product', 'quantity', 'shipping', 'total', 'status', '']])
+@props([
+    'parent_id',
+    'orders',
+    'columns' => ['name', 'state', 'city', 'product', 'quantity', 'shipping', 'total', 'status', ''],
+])
 <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
     <thead class="bg-gray-50 dark:bg-neutral-800">
         <tr>
@@ -15,7 +19,7 @@
     </thead>
     <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
         @foreach ($orders as $order)
-            <x-order.table.row :order="$order" />
+            <x-order.table.row :$parent_id :order="$order" />
         @endforeach
         </tfoot>
     </tbody>
