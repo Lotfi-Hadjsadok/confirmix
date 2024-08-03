@@ -2,12 +2,13 @@
 
 namespace App\Livewire\Employee\Order;
 
-use App\Models\User;
 use App\Models\Order;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\Computed;
 use Livewire\WithoutUrlPagination;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class FailedPage extends Component
 {
@@ -19,7 +20,7 @@ class FailedPage extends Component
     #[Computed(persist: true)]
     public function user()
     {
-        return User::with('employee')->find(1);
+        return Auth::user()->load('employee');
     }
 
     public function render()
@@ -52,6 +53,7 @@ class FailedPage extends Component
 
     public function updateStatus(Order $order, $status)
     {
+        Gate::authorize('edit-order', $order);
         $order->status = $status;
         $order->save();
     }

@@ -3,11 +3,12 @@
 namespace App\Livewire\Employee\Order;
 
 use App\Models\Order;
-use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\Computed;
 use Livewire\WithoutUrlPagination;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ConfirmedPage extends Component
 {
@@ -20,7 +21,7 @@ class ConfirmedPage extends Component
     #[Computed(persist: true)]
     public function user()
     {
-        return User::with('employee')->find(1);
+        return Auth::user()->load('employee');
     }
 
 
@@ -55,6 +56,7 @@ class ConfirmedPage extends Component
 
     public function updateStatus(Order $order, string $status): void
     {
+        Gate::authorize('edit-order', $order);
         $order->status = $status;
         $order->save();
     }
