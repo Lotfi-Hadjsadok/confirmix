@@ -1,5 +1,5 @@
 <div x-data="{ open: false }" :class="open ? 'w-[250px]' : 'w-14'"
-    class="fixed top-0 left-0 flex flex-col items-center h-screen py-4 transition-[width] border-r text-gray-50 dark:bg-neutral-800 dark:border-neutral-700">
+    class="fixed w-14 top-0 left-0 flex flex-col items-center h-screen py-4 transition-[width] border-r text-gray-50 dark:bg-neutral-800 dark:border-neutral-700">
     <button @click="open=!open">
         <svg class="p-2 text-white rounded-full shrink-0 bg-primary size-8 " viewBox="0 0 24 24" fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -14,9 +14,9 @@
     </button>
     <ul x-data class="flex flex-col gap-5 mt-32 *:cursor-pointer ">
 
-        <a href="{{ route('employee-to-confirm') }}" wire:navigate>
+        <a href="{{ route('employee.to-confirm') }}" wire:navigate>
             <li :class="open && 'px-4'"
-                class="flex hover:bg-primary/30 items-center justify-center gap-2 p-2 text-center text-white rounded-full shadow {{ request()->route()->named('employee-to-confirm') || request()->is('/') ? 'bg-primary/30' : 'bg-primary' }} ">
+                class="flex  hover:bg-primary/30 overflow-hidden items-center justify-center gap-2 p-2 text-center text-white rounded-full shadow {{ request()->route()->named('employee.to-confirm') || request()->is('/') ? 'bg-primary/30' : 'bg-primary' }} ">
                 <svg class="shrink-0 size-6" viewBox="0 0 1024 1024" class="icon" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" fill="#000000">
                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -30,13 +30,13 @@
                             fill="#ffffff"></path>
                     </g>
                 </svg>
-                <span :class="open ? 'block' : 'hidden'" class="text-nowrap">Pending Orders</span>
+                <span :class="open ? '!block' : 'hidden'" class="hidden text-nowrap">Pending Orders</span>
             </li>
         </a>
 
-        <a href="{{ route('employee-confirmed') }}" wire:navigate>
+        <a href="{{ route('employee.confirmed') }}" wire:navigate>
             <li :class="open && 'px-4'"
-                class="flex hover:bg-primary/30 items-center justify-center gap-2 p-2 text-white rounded-full shadow {{ request()->route()->named('employee-confirmed') ? 'bg-primary/30' : 'bg-primary' }}">
+                class="flex hover:bg-primary/30 items-center justify-center gap-2 p-2 text-white rounded-full shadow {{ request()->route()->named('employee.confirmed') ? 'bg-primary/30' : 'bg-primary' }}">
                 <svg class="size-6" viewBox="0 0 1024 1024" fill="#ffffff" class="icon" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -50,13 +50,13 @@
                             fill=""></path>
                     </g>
                 </svg>
-                <span :class="open ? 'block' : 'hidden'" class="text-nowrap">Confirmed Orders</span>
+                <span :class="open ? '!block' : 'hidden'" class="hidden text-nowrap">Confirmed Orders</span>
             </li>
         </a>
 
-        <a href="{{ route('employee-failed') }}" wire:navigate>
+        <a href="{{ route('employee.failed') }}" wire:navigate>
             <li :class="open && 'px-4'"
-                class="flex items-center  hover:bg-primary/30 justify-center gap-2 p-2 text-white rounded-full shadow {{ request()->route()->named('employee-failed') ? 'bg-primary/30' : 'bg-primary' }}">
+                class="flex items-center  hover:bg-primary/30 justify-center gap-2 p-2 text-white rounded-full shadow {{ request()->route()->named('employee.failed') ? 'bg-primary/30' : 'bg-primary' }}">
                 <svg class="size-6" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -66,12 +66,12 @@
                             fill="#ffffff"></path>
                     </g>
                 </svg>
-                <span :class="open ? 'block' : 'hidden'" class="text-nowrap">Failed Orders</span>
+                <span :class="open ? '!block' : 'hidden'" class="hidden text-nowrap">Failed Orders</span>
             </li>
         </a>
-        <a href="{{ route('employee-settings') }}" wire:navigate>
+        <a href="{{ route('employee.settings') }}" wire:navigate>
             <li :class="open && 'px-4'"
-                class="flex items-center  hover:bg-primary/30 justify-center gap-2 p-2 text-white rounded-full shadow {{ request()->route()->named('employee-settings') ? 'bg-primary/30' : 'bg-primary' }}">
+                class="flex items-center  hover:bg-primary/30 justify-center gap-2 p-2 text-white rounded-full shadow {{ request()->route()->named('employee.settings') ? 'bg-primary/30' : 'bg-primary' }}">
                 <svg class="size-6" viewBox="0 0 600 600" version="1.1" id="svg9724" sodipodi:docname="settings2.svg"
                     inkscape:version="1.2.2 (1:1.2.2+202212051550+b0a8486541)"
                     xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -111,7 +111,7 @@
                         </g>
                     </g>
                 </svg>
-                <span :class="open ? 'block' : 'hidden'" class="text-nowrap">Settings</span>
+                <span :class="open ? '!block' : 'hidden'" class="hidden text-nowrap">Settings</span>
             </li>
         </a>
 

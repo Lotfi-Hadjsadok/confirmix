@@ -33,7 +33,7 @@ class OrderFactory extends Factory
             'currency' => 'Dz',
             'status' => $this->faker->randomElement(Status::cases())->value,
             'client_id' => Client::factory(),
-            'employee_id' => Employee::factory(),
+            'employee_id' => 3,
             'employer_id' => Employer::factory(),
         ];
     }
