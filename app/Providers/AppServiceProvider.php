@@ -24,7 +24,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::define('edit-order', function (User $user, Order $order) {
-            return ($user->role === 'employee' && $user->id === $order->employee->user_id) || ($user->role === 'employer' && $user->id === $order->employer->user_id);
+            return ($user->role === 'employee' && $user->employee->id === $order->employee->id)
+                || ($user->role === 'employer' && $user->employer->id === $order->employer->id);
         });
     }
 }

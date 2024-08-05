@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Employee\Order;
+namespace App\Livewire\Employer\Order;
 
 use App\Models\Order;
 use Livewire\Component;
@@ -22,7 +22,7 @@ class ToConfirmPage extends Component
         // Auth::attempt(['email' => 'jacobs.kolby@example.com', 'password' => 'admin']);
 
         return view(
-            'livewire.employee.order.to-confirm-page',
+            'livewire.employer.order.to-confirm-page',
             [
                 'pending_orders_count' => $this->orders_count(['pending']), 'to_recall_orders_count' => $this->orders_count(['to_recall'])
             ]
@@ -38,8 +38,9 @@ class ToConfirmPage extends Component
     #[Computed]
     public function orders()
     {
-        return $this->user()->employee->orders()
+        return Order::query()
             ->with('client')
+            ->where('employer_id', $this->user()->employer->id)
             ->statuses(['to_recall', 'pending'])
             ->orderBy('updated_at', 'asc')
             ->simplePaginate(10);
@@ -47,7 +48,8 @@ class ToConfirmPage extends Component
 
     public function orders_count(array $statuses): int
     {
-        return $this->user()->employee->orders()
+        return Order::query()
+            ->where('employer_id', $this->user()->employer->id)
             ->statuses($statuses)
             ->count();
     }

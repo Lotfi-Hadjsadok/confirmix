@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Employee\Order;
+namespace App\Livewire\Employer\Order;
 
 use App\Models\Order;
 use Livewire\Component;
@@ -10,24 +10,13 @@ use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
-class ToConfirmPage extends Component
+class FailedPage extends Component
 {
+
     use WithPagination, WithoutUrlPagination;
+    public $parent_id = 'failed-page';
+    public $filter_by = 'today';
 
-    public $parent_id = 'to-confirm-page';
-
-
-    public function render()
-    {
-        // Auth::attempt(['email' => 'jacobs.kolby@example.com', 'password' => 'admin']);
-
-        return view(
-            'livewire.employee.order.to-confirm-page',
-            [
-                'pending_orders_count' => $this->orders_count(['pending']), 'to_recall_orders_count' => $this->orders_count(['to_recall'])
-            ]
-        );
-    }
 
     #[Computed(persist: true)]
     public function user()
@@ -35,23 +24,32 @@ class ToConfirmPage extends Component
         return Auth::user()->load('employee');
     }
 
+    public function render()
+    {
+        return view('livewire.employer.order.failed-page', [
+            'cancelled_orders_count' => $this->orders_count(['cancelled']),
+            'not_delivered_orders_count' => $this->orders_count(['not_delivered']),
+        ]);
+    }
+
     #[Computed]
     public function orders()
     {
-        return $this->user()->employee->orders()
+        return Order::query()
             ->with('client')
-            ->statuses(['to_recall', 'pending'])
+            ->where('employer_id', $this->user()->employer->id)
+            ->statuses(['cancelled', 'not_delivered'])
             ->orderBy('updated_at', 'asc')
             ->simplePaginate(10);
     }
 
     public function orders_count(array $statuses): int
     {
-        return $this->user()->employee->orders()
+        return Order::query()
+            ->where('employer_id', $this->user()->employer->id)
             ->statuses($statuses)
             ->count();
     }
-
 
     public function updateStatus(Order $order, $status)
     {

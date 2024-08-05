@@ -34,17 +34,16 @@ class FailedPage extends Component
     #[Computed]
     public function orders()
     {
-        return $this->user->employee->orders()
+        return $this->user()->employee->orders()
             ->with('client')
             ->statuses(['cancelled', 'not_delivered'])
             ->orderBy('updated_at', 'desc')
             ->simplePaginate(10);
     }
 
-    #[Computed]
     public function orders_count(array $statuses): int
     {
-        return $this->user->employee->orders()
+        return $this->user()->employee->orders()
             ->with('client')
             ->statuses($statuses)
             ->orderBy('updated_at', 'desc')

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Employee;
+namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\Attributes\Layout;
@@ -16,7 +16,7 @@ class LoginPage extends Component
     #[Layout('components.layouts.login')]
     public function render()
     {
-        return view('livewire.employee.login-page');
+        return view('livewire.login-page');
     }
 
 
@@ -31,6 +31,8 @@ class LoginPage extends Component
                 'email' => 'Sorry, your credentials do not match our records.',
             ]);
         }
-        return redirect()->route('employee.to-confirm');
+        return auth()->user()->role == "employee"
+            ?  redirect()->route('employee.to-confirm')
+            :  redirect()->route('employer.to-confirm');
     }
 }

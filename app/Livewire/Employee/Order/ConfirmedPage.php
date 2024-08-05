@@ -18,6 +18,16 @@ class ConfirmedPage extends Component
     public $filter_by = 'today';
 
 
+
+
+    public function render()
+    {
+        return view('livewire.employee.order.confirmed-page', [
+            'confirmed_orders_count' => $this->orders_count(['confirmed']),
+            'failed_orders_count' => $this->orders_count(['cancelled', 'not_delivered'])
+        ]);
+    }
+
     #[Computed(persist: true)]
     public function user()
     {
@@ -28,7 +38,7 @@ class ConfirmedPage extends Component
     #[Computed]
     public function orders()
     {
-        return $this->user->employee->orders()
+        return $this->user()->employee->orders()
             ->with('client')
             ->statuses(['confirmed'])
             ->orderBy('updated_at', 'desc')
@@ -37,22 +47,15 @@ class ConfirmedPage extends Component
     }
 
 
-    #[Computed]
     public function orders_count(array $statuses): int
     {
-        return $this->user->employee->orders()
+        return $this->user()->employee->orders()
             ->statuses($statuses)
             ->dateFilter($this->filter_by)
             ->count();
     }
 
-    public function render()
-    {
-        return view('livewire.employee.order.confirmed-page', [
-            'confirmed_orders_count' => $this->orders_count(['confirmed']),
-            'failed_orders_count' => $this->orders_count(['cancelled', 'not_delivered'])
-        ]);
-    }
+
 
     public function updateStatus(Order $order, string $status): void
     {

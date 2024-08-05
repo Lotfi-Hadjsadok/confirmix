@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Employee\Order;
+namespace App\Livewire\Employer\Order;
 
 use App\Models\Order;
 use Livewire\Component;
@@ -10,23 +10,23 @@ use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
-class ToConfirmPage extends Component
+class ConfirmedPage extends Component
 {
-    use WithPagination, WithoutUrlPagination;
 
-    public $parent_id = 'to-confirm-page';
+
+    use WithPagination, WithoutUrlPagination;
+    public $parent_id = 'confirmed-page';
+    public $filter_by = 'today';
+
+
 
 
     public function render()
     {
-        // Auth::attempt(['email' => 'jacobs.kolby@example.com', 'password' => 'admin']);
-
-        return view(
-            'livewire.employee.order.to-confirm-page',
-            [
-                'pending_orders_count' => $this->orders_count(['pending']), 'to_recall_orders_count' => $this->orders_count(['to_recall'])
-            ]
-        );
+        return view('livewire.employer.order.confirmed-page', [
+            'confirmed_orders_count' => $this->orders_count(['confirmed']),
+            'failed_orders_count' => $this->orders_count(['cancelled', 'not_delivered'])
+        ]);
     }
 
     #[Computed(persist: true)]
@@ -35,25 +35,30 @@ class ToConfirmPage extends Component
         return Auth::user()->load('employee');
     }
 
+
     #[Computed]
     public function orders()
     {
-        return $this->user()->employee->orders()
+        return Order::query()
             ->with('client')
-            ->statuses(['to_recall', 'pending'])
+            ->where('employer_id', $this->user()->employer->id)
+            ->statuses(['confirmed'])
             ->orderBy('updated_at', 'asc')
             ->simplePaginate(10);
     }
 
+
     public function orders_count(array $statuses): int
     {
-        return $this->user()->employee->orders()
+        return Order::query()
+            ->where('employer_id', $this->user()->employer->id)
             ->statuses($statuses)
             ->count();
     }
 
 
-    public function updateStatus(Order $order, $status)
+
+    public function updateStatus(Order $order, string $status): void
     {
         Gate::authorize('edit-order', $order);
         $order->status = $status;
